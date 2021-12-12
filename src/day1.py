@@ -1,6 +1,7 @@
 from file_read_fn import input_text_to_array
 
 depths = input_text_to_array('src/inputs/day1_input.txt')
+depths = [int(depth) for depth in depths]
 
 testDepths = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263]
 
