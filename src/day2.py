@@ -8,11 +8,27 @@ x_1, y_1 = 0, 0
 
 for inst in instructions:
     direction, dist = inst.split(' ')
-    if (direction == 'forward'):
-        x_1 += int(dist)
-    if (direction == 'down'):
-        y_1 += int(dist)
-    if (direction == 'up'):
-        y_1 -= int(dist)
+    dist = int(dist)
+    if direction == 'forward':
+        x_1 += dist
+    if direction == 'down':
+        y_1 += dist
+    if direction == 'up':
+        y_1 -= dist
 
 print(x_1 * y_1)
+
+x_2, y_2, aim = 0, 0, 0
+
+for inst in instructions:
+    cmd, dist = inst.split(' ')
+    dist = int(dist)
+    if cmd == 'down':
+        aim += dist
+    if cmd == 'up':
+        aim -= dist
+    if cmd == 'forward':
+        x_2 += dist
+        y_2 += aim * dist
+
+print(x_2 * y_2)
