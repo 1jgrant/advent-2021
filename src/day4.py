@@ -25,7 +25,7 @@ for card in cards:
     card.extend(columns)
 
 
-def get_card_and_drawn_nums(bingo_cards, draw_numbers):
+def get_winning_card_and_drawn_nums(bingo_cards, draw_numbers):
     drawn_nums = draw_numbers[:4]
     for num in draw_numbers[4:]:
         drawn_nums.append(num)
@@ -36,8 +36,30 @@ def get_card_and_drawn_nums(bingo_cards, draw_numbers):
                     return (card, drawn_nums)
 
 
-winning_card, drawn_numbers = get_card_and_drawn_nums(cards, draw_numbers)
-winning_card_numbers = list(set([item for dimension in winning_card for item in dimension]))
-unmarked_numbers = [int(num) for num in winning_card_numbers if num not in drawn_numbers]
-sum_of_unmarked = sum(unmarked_numbers)
-print(sum_of_unmarked * int(drawn_numbers[-1]))
+def get_score_from_card_and_drawn_numbers(card, drawn_numbers):
+    card_numbers = list(set([item for dimension in card for item in dimension]))
+    unmarked_numbers = [int(num) for num in card_numbers if num not in drawn_numbers]
+    sum_of_unmarked = sum(unmarked_numbers)
+    return sum_of_unmarked * int(drawn_numbers[-1])
+
+
+winning_card, drawn_numbers = get_winning_card_and_drawn_nums(cards, draw_numbers)
+print(get_score_from_card_and_drawn_numbers(winning_card, drawn_numbers))
+
+
+def get_last_card_and_drawn_nums(bingo_cards, draw_numbers):
+    drawn_nums = draw_numbers[:4]
+    for num in draw_numbers[4:]:
+        drawn_nums.append(num)
+        for card in bingo_cards:
+            for dimension in card:
+                bingo = all(elem in drawn_nums for elem in dimension)
+                if bingo:
+                    if len(bingo_cards) > 1:
+                        bingo_cards.remove(card)
+                        break
+                    return (card, drawn_nums)
+
+
+losing_card, drawn_numbers = get_last_card_and_drawn_nums(cards, draw_numbers)
+print(get_score_from_card_and_drawn_numbers(losing_card, drawn_numbers))
